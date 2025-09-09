@@ -1,0 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+body { font-family: 'Poppins', sans-serif; background-color: #f5f7fa; }
+.progress-bar { height: 8px; border-radius: 4px; background-color: #e0e0e0; }
+.progress-fill { height: 100%; border-radius: 4px; background-color: #3b82f6; }
+.print-area { box-shadow: 0 0 20px rgba(0,0,0,.1); }
+@media print {
+  body * { visibility: hidden; }
+  .print-area, .print-area * { visibility: visible; }
+  .print-area { position: absolute; left:0; top:0; width:100%; box-shadow:none; }
+  .no-print { display:none !important; }
+}

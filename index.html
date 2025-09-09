@@ -1,505 +1,162 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Professional CV Resume</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
-        
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f5f7fa;
-        }
-        
-        .progress-bar {
-            height: 8px;
-            border-radius: 4px;
-            background-color: #e0e0e0;
-        }
-        
-        .progress-fill {
-            height: 100%;
-            border-radius: 4px;
-            background-color: #3b82f6;
-        }
-        
-        .print-area {
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            .print-area, .print-area * {
-                visibility: visible;
-            }
-            .print-area {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-                box-shadow: none;
-            }
-            .no-print {
-                display: none !important;
-            }
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Danilo de Bortole Dias — CV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body class="bg-gray-100 py-8">
-    <div class="container mx-auto px-4">
-        <!-- Settings Panel -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-8 no-print">
-            <h2 class="text-2xl font-bold text-gray-800 mb-4">CV Settings</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Color Theme -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Color Theme</label>
-                    <div class="flex space-x-2">
-                        <button onclick="changeTheme('blue')" class="w-8 h-8 rounded-full bg-blue-500 focus:ring-2 focus:ring-blue-300"></button>
-                        <button onclick="changeTheme('red')" class="w-8 h-8 rounded-full bg-red-500 focus:ring-2 focus:ring-red-300"></button>
-                        <button onclick="changeTheme('green')" class="w-8 h-8 rounded-full bg-green-500 focus:ring-2 focus:ring-green-300"></button>
-                        <button onclick="changeTheme('purple')" class="w-8 h-8 rounded-full bg-purple-500 focus:ring-2 focus:ring-purple-300"></button>
-                        <button onclick="changeTheme('indigo')" class="w-8 h-8 rounded-full bg-indigo-500 focus:ring-2 focus:ring-indigo-300"></button>
-                    </div>
-                </div>
-                
-                <!-- Layout -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Layout</label>
-                    <select id="layoutSelect" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="standard">Standard</option>
-                        <option value="modern">Modern</option>
-                        <option value="creative">Creative</option>
-                    </select>
-                </div>
-                
-                <!-- Font Size -->
-                <div>
-                    <label class="block text-sm font-medium text-gray-700 mb-2">Font Size</label>
-                    <select id="fontSize" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <option value="small">Small</option>
-                        <option value="medium" selected>Medium</option>
-                        <option value="large">Large</option>
-                    </select>
-                </div>
-            </div>
-            
-            <div class="mt-6 flex justify-between">
-                <button onclick="printCV()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition flex items-center">
-                    <i class="fas fa-print mr-2"></i> Print CV
-                </button>
-                <button onclick="downloadPDF()" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition flex items-center">
-                    <i class="fas fa-file-pdf mr-2"></i> Download PDF
-                </button>
-                <button onclick="resetSettings()" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition flex items-center">
-                    <i class="fas fa-redo mr-2"></i> Reset
-                </button>
-            </div>
+  <div class="container mx-auto px-4">
+
+    <!-- Settings Panel -->
+    <div class="bg-white rounded-lg shadow-md p-6 mb-8 no-print">
+      <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <h2 class="text-2xl font-bold text-gray-800">CV Settings</h2>
+
+        <!-- Language toggle -->
+        <div class="flex items-center gap-3">
+          <label for="langSelect" class="text-sm font-medium text-gray-700">Language / Idioma</label>
+          <select id="langSelect" class="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="pt">Português (BR)</option>
+            <option value="en">English</option>
+          </select>
         </div>
-        
-        <!-- CV Template -->
-        <div id="cvTemplate" class="print-area bg-white rounded-lg overflow-hidden">
-            <!-- Header -->
-            <div class="bg-blue-600 text-white p-8">
-                <div class="flex flex-col md:flex-row justify-between items-center">
-                    <div class="mb-6 md:mb-0">
-                        <h1 id="name" class="text-3xl md:text-4xl font-bold">John Doe</h1>
-                        <p id="title" class="text-xl md:text-2xl">Senior Web Developer</p>
-                    </div>
-                    <div class="text-right">
-                        <p id="email" class="mb-1"><i class="fas fa-envelope mr-2"></i> john.doe@example.com</p>
-                        <p id="phone" class="mb-1"><i class="fas fa-phone mr-2"></i> (123) 456-7890</p>
-                        <p id="location"><i class="fas fa-map-marker-alt mr-2"></i> New York, USA</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="flex flex-col md:flex-row">
-                <!-- Left Column -->
-                <div class="w-full md:w-1/3 bg-gray-50 p-6">
-                    <!-- Profile Picture -->
-                    <div class="mb-6 flex justify-center">
-                        <div class="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-500">
-                            <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Profile Picture" class="w-full h-full object-cover">
-                        </div>
-                    </div>
-                    
-                    <!-- About -->
-                    <div class="mb-6">
-                        <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1">About Me</h2>
-                        <p id="aboutText" class="text-gray-700">Experienced web developer with 5+ years of expertise in front-end and back-end development. Passionate about creating efficient, scalable, and user-friendly web applications. Strong problem-solving skills and ability to work in team environments.</p>
-                    </div>
-                    
-                    <!-- Skills -->
-                    <div class="mb-6">
-                        <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1">Skills</h2>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">HTML/CSS</span>
-                                    <span class="text-gray-700">95%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 95%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">JavaScript</span>
-                                    <span class="text-gray-700">90%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 90%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">React</span>
-                                    <span class="text-gray-700">85%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 85%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">Node.js</span>
-                                    <span class="text-gray-700">80%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 80%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">UI/UX Design</span>
-                                    <span class="text-gray-700">75%</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 75%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Languages -->
-                    <div class="mb-6">
-                        <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1">Languages</h2>
-                        <div class="space-y-2">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">English</span>
-                                    <span class="text-gray-700">Native</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 100%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">Spanish</span>
-                                    <span class="text-gray-700">Fluent</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 80%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-700">French</span>
-                                    <span class="text-gray-700">Intermediate</span>
-                                </div>
-                                <div class="progress-bar">
-                                    <div class="progress-fill" style="width: 60%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Social Links -->
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1">Social Links</h2>
-                        <div class="space-y-2">
-                            <p class="text-gray-700"><i class="fab fa-github mr-2"></i> github.com/johndoe</p>
-                            <p class="text-gray-700"><i class="fab fa-linkedin mr-2"></i> linkedin.com/in/johndoe</p>
-                            <p class="text-gray-700"><i class="fab fa-twitter mr-2"></i> twitter.com/johndoe</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Right Column -->
-                <div class="w-full md:w-2/3 p-6">
-                    <!-- Experience -->
-                    <div class="mb-8">
-                        <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1">Work Experience</h2>
-                        
-                        <div class="space-y-6">
-                            <!-- Experience 1 -->
-                            <div>
-                                <div class="flex justify-between items-start mb-1">
-                                    <h3 class="text-lg font-semibold text-gray-800">Senior Web Developer</h3>
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">2019 - Present</span>
-                                </div>
-                                <p class="text-gray-600 font-medium mb-2">Tech Solutions Inc., New York</p>
-                                <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                    <li>Lead a team of 5 developers to build responsive web applications</li>
-                                    <li>Implemented React and Redux for front-end development</li>
-                                    <li>Optimized application performance, reducing load time by 40%</li>
-                                    <li>Collaborated with UX designers to create intuitive user interfaces</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Experience 2 -->
-                            <div>
-                                <div class="flex justify-between items-start mb-1">
-                                    <h3 class="text-lg font-semibold text-gray-800">Web Developer</h3>
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">2016 - 2019</span>
-                                </div>
-                                <p class="text-gray-600 font-medium mb-2">Digital Creations, Boston</p>
-                                <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                    <li>Developed and maintained company websites and web applications</li>
-                                    <li>Created RESTful APIs using Node.js and Express</li>
-                                    <li>Implemented responsive designs with Bootstrap and CSS Grid</li>
-                                    <li>Improved website SEO, increasing organic traffic by 30%</li>
-                                </ul>
-                            </div>
-                            
-                            <!-- Experience 3 -->
-                            <div>
-                                <div class="flex justify-between items-start mb-1">
-                                    <h3 class="text-lg font-semibold text-gray-800">Junior Developer</h3>
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">2014 - 2016</span>
-                                </div>
-                                <p class="text-gray-600 font-medium mb-2">WebStart LLC, Chicago</p>
-                                <ul class="list-disc list-inside text-gray-700 space-y-1">
-                                    <li>Assisted in developing and testing web applications</li>
-                                    <li>Fixed bugs and implemented small features</li>
-                                    <li>Learned modern web development practices</li>
-                                    <li>Participated in code reviews and team meetings</li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Education -->
-                    <div class="mb-8">
-                        <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1">Education</h2>
-                        
-                        <div class="space-y-4">
-                            <!-- Education 1 -->
-                            <div>
-                                <div class="flex justify-between items-start mb-1">
-                                    <h3 class="text-lg font-semibold text-gray-800">Master of Computer Science</h3>
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">2012 - 2014</span>
-                                </div>
-                                <p class="text-gray-600 font-medium">Stanford University, California</p>
-                            </div>
-                            
-                            <!-- Education 2 -->
-                            <div>
-                                <div class="flex justify-between items-start mb-1">
-                                    <h3 class="text-lg font-semibold text-gray-800">Bachelor of Science in Software Engineering</h3>
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">2008 - 2012</span>
-                                </div>
-                                <p class="text-gray-600 font-medium">MIT, Massachusetts</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Projects -->
-                    <div class="mb-8">
-                        <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1">Projects</h2>
-                        
-                        <div class="space-y-4">
-                            <!-- Project 1 -->
-                            <div class="p-4 border border-gray-200 rounded-lg">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-1">E-commerce Platform</h3>
-                                <p class="text-gray-700 mb-2">A full-stack e-commerce solution with React frontend and Node.js backend.</p>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">React</span>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">Node.js</span>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">MongoDB</span>
-                            </div>
-                            
-                            <!-- Project 2 -->
-                            <div class="p-4 border border-gray-200 rounded-lg">
-                                <h3 class="text-lg font-semibold text-gray-800 mb-1">Task Management App</h3>
-                                <p class="text-gray-700 mb-2">A collaborative task management application with real-time updates.</p>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">Vue.js</span>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">Firebase</span>
-                                <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700">Tailwind CSS</span>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Certifications -->
-                    <div>
-                        <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1">Certifications</h2>
-                        
-                        <div class="space-y-3">
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-500 mt-1">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <div class="ml-2">
-                                    <p class="text-gray-800 font-medium">AWS Certified Developer - Associate</p>
-                                    <p class="text-gray-600 text-sm">Amazon Web Services, 2020</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-500 mt-1">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <div class="ml-2">
-                                    <p class="text-gray-800 font-medium">Google Professional Data Engineer</p>
-                                    <p class="text-gray-600 text-sm">Google Cloud, 2019</p>
-                                </div>
-                            </div>
-                            
-                            <div class="flex items-start">
-                                <div class="flex-shrink-0 h-5 w-5 text-blue-500 mt-1">
-                                    <i class="fas fa-certificate"></i>
-                                </div>
-                                <div class="ml-2">
-                                    <p class="text-gray-800 font-medium">Certified ScrumMaster (CSM)</p>
-                                    <p class="text-gray-600 text-sm">Scrum Alliance, 2018</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+        <!-- Color Theme -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Color Theme</label>
+          <div class="flex space-x-2">
+            <button onclick="changeTheme('blue')"   class="w-8 h-8 rounded-full bg-blue-500   focus:ring-2 focus:ring-blue-300"></button>
+            <button onclick="changeTheme('red')"    class="w-8 h-8 rounded-full bg-red-500    focus:ring-2 focus:ring-red-300"></button>
+            <button onclick="changeTheme('green')"  class="w-8 h-8 rounded-full bg-green-500  focus:ring-2 focus:ring-green-300"></button>
+            <button onclick="changeTheme('purple')" class="w-8 h-8 rounded-full bg-purple-500 focus:ring-2 focus:ring-purple-300"></button>
+            <button onclick="changeTheme('yellow')" class="w-8 h-8 rounded-full bg-yellow-500 focus:ring-2 focus:ring-yellow-300"></button>
+          </div>
         </div>
+
+        <!-- Layout -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Layout</label>
+          <select id="layoutSelect" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="standard">Standard</option>
+            <option value="modern">Modern</option>
+            <option value="creative">Creative</option>
+          </select>
+        </div>
+
+        <!-- Font Size -->
+        <div>
+          <label class="block text-sm font-medium text-gray-700 mb-2">Font Size</label>
+          <select id="fontSize" class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+            <option value="small">Small</option>
+            <option value="medium" selected>Medium</option>
+            <option value="large">Large</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-6 flex flex-wrap gap-3">
+        <button onclick="printCV()" class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition flex items-center">
+          <i class="fas fa-print mr-2"></i> <span data-i18n="print">Imprimir</span>
+        </button>
+        <button onclick="downloadPDF()" class="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition flex items-center">
+          <i class="fas fa-file-pdf mr-2"></i> <span data-i18n="download">Baixar PDF</span>
+        </button>
+        <button onclick="resetSettings()" class="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 transition flex items-center">
+          <i class="fas fa-redo mr-2"></i> <span data-i18n="reset">Reset</span>
+        </button>
+      </div>
     </div>
 
-    <script>
-        // Theme changer function
-        function changeTheme(color) {
-            const themeColors = {
-                'blue': {
-                    primary: 'bg-blue-600',
-                    secondary: 'border-blue-500',
-                    accent: 'text-blue-500',
-                    progress: 'bg-blue-500',
-                    badge: 'bg-blue-100 text-blue-800'
-                },
-                'red': {
-                    primary: 'bg-red-600',
-                    secondary: 'border-red-500',
-                    accent: 'text-red-500',
-                    progress: 'bg-red-500',
-                    badge: 'bg-red-100 text-red-800'
-                },
-                'green': {
-                    primary: 'bg-green-600',
-                    secondary: 'border-green-500',
-                    accent: 'text-green-500',
-                    progress: 'bg-green-500',
-                    badge: 'bg-green-100 text-green-800'
-                },
-                'purple': {
-                    primary: 'bg-purple-600',
-                    secondary: 'border-purple-500',
-                    accent: 'text-purple-500',
-                    progress: 'bg-purple-500',
-                    badge: 'bg-purple-100 text-purple-800'
-                },
-                'indigo': {
-                    primary: 'bg-indigo-600',
-                    secondary: 'border-indigo-500',
-                    accent: 'text-indigo-500',
-                    progress: 'bg-indigo-500',
-                    badge: 'bg-indigo-100 text-indigo-800'
-                }
-            };
-            
-            const selectedTheme = themeColors[color];
-            
-            // Update header background
-            document.querySelector('.bg-blue-600').className = document.querySelector('.bg-blue-600').className.replace('bg-blue-600', selectedTheme.primary);
-            
-            // Update borders
-            const borders = document.querySelectorAll('.border-blue-500');
-            borders.forEach(el => {
-                el.className = el.className.replace('border-blue-500', selectedTheme.secondary);
-            });
-            
-            // Update progress bars
-            const progressBars = document.querySelectorAll('.progress-fill');
-            progressBars.forEach(el => {
-                el.className = el.className.replace('bg-blue-500', selectedTheme.progress);
-            });
-            
-            // Update badges
-            const badges = document.querySelectorAll('.bg-blue-100');
-            badges.forEach(el => {
-                el.className = el.className.replace('bg-blue-100', selectedTheme.badge.split(' ')[0]);
-                el.className = el.className.replace('text-blue-800', selectedTheme.badge.split(' ')[1]);
-            });
-            
-            // Update profile picture border
-            const profileBorder = document.querySelector('.border-blue-500');
-            if (profileBorder) {
-                profileBorder.className = profileBorder.className.replace('border-blue-500', selectedTheme.secondary);
-            }
-        }
-        
-        // Print CV function
-        function printCV() {
-            window.print();
-        }
-        
-        // Download as PDF (simulated - in a real app you would use a library like jsPDF)
-        function downloadPDF() {
-            alert('In a real application, this would download your CV as a PDF. For now, please use the print function and save as PDF.');
-        }
-        
-        // Reset settings
-        function resetSettings() {
-            changeTheme('blue');
-            document.getElementById('layoutSelect').value = 'standard';
-            document.getElementById('fontSize').value = 'medium';
-            alert('Settings have been reset to default.');
-        }
-        
-        // Font size changer
-        document.getElementById('fontSize').addEventListener('change', function() {
-            const size = this.value;
-            const cv = document.getElementById('cvTemplate');
-            
-            if (size === 'small') {
-                cv.className = cv.className.replace(/text-\w+/g, '');
-                cv.className += ' text-sm';
-            } else if (size === 'medium') {
-                cv.className = cv.className.replace(/text-\w+/g, '');
-            } else if (size === 'large') {
-                cv.className = cv.className.replace(/text-\w+/g, '');
-                cv.className += ' text-lg';
-            }
-        });
-        
-        // Layout changer
-        document.getElementById('layoutSelect').addEventListener('change', function() {
-            const layout = this.value;
-            const cv = document.getElementById('cvTemplate');
-            
-            // Reset all layout classes
-            cv.className = cv.className.replace(/bg-\w+-\d+ text-\w+ rounded-\w+ overflow-\w+ print-area/g, '');
-            cv.className += ' print-area bg-white rounded-lg overflow-hidden';
-            
-            if (layout === 'modern') {
-                cv.querySelector('.bg-blue-600').className += ' bg-gradient-to-r from-blue-600 to-blue-400';
-            } else if (layout === 'creative') {
-                cv.querySelector('.bg-blue-600').className += ' bg-gradient-to-r from-blue-500 to-indigo-600';
-                cv.querySelector('.w-full.md\\:w-1\\/3').className += ' bg-gradient-to-b from-gray-50 to-gray-100';
-            }
-        });
-    </script>
+    <!-- CV Template -->
+    <div id="cvTemplate" class="print-area bg-white rounded-lg overflow-hidden">
+
+      <!-- Header -->
+      <div id="headerColor" class="bg-blue-600 text-white p-8">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+          <div class="mb-6 md:mb-0 text-center md:text-left">
+            <h1 id="name" class="text-3xl md:text-4xl font-bold">Danilo de Bortole Dias</h1>
+            <p id="title" class="text-xl md:text-2xl">Estudante de ADS | Suporte Técnico | Marketing Digital</p>
+          </div>
+          <div class="text-center md:text-right">
+            <p id="email"   class="mb-1"><i class="fas fa-envelope mr-2"></i> danilodebortoledias@gmail.com</p>
+            <p id="phone"   class="mb-1"><i class="fas fa-phone mr-2"></i> (17) 98127-2509</p>
+            <p id="location"><i class="fas fa-map-marker-alt mr-2"></i> Votuporanga, SP — Brasil</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col md:flex-row">
+        <!-- Left Column -->
+        <div class="w-full md:w-1/3 bg-gray-50 p-6">
+          <!-- Profile Picture -->
+          <div class="mb-6 flex justify-center">
+            <div id="profileBorder" class="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-500">
+              <img src="assets/img/profile.jpg" alt="Profile Picture" class="w-full h-full object-cover">
+            </div>
+          </div>
+
+          <!-- About -->
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1" data-i18n="about">Sobre</h2>
+            <p id="aboutText" class="text-gray-700"></p>
+          </div>
+
+          <!-- Skills -->
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1" data-i18n="skills">Habilidades</h2>
+            <div id="skillsContainer" class="space-y-4"></div>
+          </div>
+
+          <!-- Languages -->
+          <div class="mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1" data-i18n="languages">Idiomas</h2>
+            <div id="langsContainer" class="space-y-2"></div>
+          </div>
+
+          <!-- Social Links -->
+          <div>
+            <h2 class="text-xl font-bold text-gray-800 mb-2 border-b-2 border-blue-500 pb-1" data-i18n="social">Links</h2>
+            <div id="socialContainer" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <!-- Right Column -->
+        <div class="w-full md:w-2/3 p-6">
+          <!-- Experience -->
+          <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1" data-i18n="experience">Experiência Profissional</h2>
+            <div id="experienceContainer" class="space-y-6"></div>
+          </div>
+
+          <!-- Education -->
+          <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1" data-i18n="education">Educação</h2>
+            <div id="educationContainer" class="space-y-4"></div>
+          </div>
+
+          <!-- Projects -->
+          <div class="mb-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1" data-i18n="projects">Projetos</h2>
+            <div id="projectsContainer" class="space-y-4"></div>
+          </div>
+
+          <!-- Certifications -->
+          <div class="mb-2">
+            <h2 class="text-xl font-bold text-gray-800 mb-4 border-b-2 border-blue-500 pb-1" data-i18n="certs">Cursos & Certificados</h2>
+            <div id="certsContainer" class="space-y-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+
 </body>
 </html>
